@@ -1,0 +1,20 @@
+yaml
+name: Build EXE
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: pip install pyinstaller pygame
+      - name: Build
+        run: pyinstaller --onefile --noconsole --add-data "music.mp3;." bees.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FPS_Boost
+          path: dist/bees.exe
